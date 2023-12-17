@@ -6,23 +6,28 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/gorilla/mux"
+	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-const connectionString = "mongodb+srv://sandeepyadavxoxo:ReXz3tJhfQmZr1ut@learning-cluster.qkqaapq.mongodb.net/?retryWrites=true&w=majority"
-const databaseName = "curdApp"
-const collectionName = "userData"
-
 var collection *mongo.Collection
 
 //connect with mongodb
 
 func Init() {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+	connectionString := os.Getenv("DB_CONNECT")
+	databaseName := os.Getenv("DB_NAME")
+	collectionName := os.Getenv("COLLECTION_NAME")
 
 	clientOption := options.Client().ApplyURI(connectionString)
 	client, err := mongo.Connect(context.TODO(), clientOption)

@@ -36,13 +36,12 @@ func Init() {
 		log.Fatal(err.Error())
 
 	}
-	log.Println("Connection Success with MongoDB")
+	log.Println("Connection Success with MongoDB Database", databaseName)
 
 	//will return collection
 	collection = client.Database(databaseName).Collection(collectionName)
-
 	//collection reference
-	log.Println(collection.Name())
+	log.Println("Collection Name", collection.Name())
 
 }
 
